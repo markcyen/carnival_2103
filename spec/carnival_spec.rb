@@ -74,7 +74,7 @@ RSpec.describe Carnival do
       bob.add_interest('Ferris Wheel')
       bob.add_interest('Bumper Cars')
       sally = Attendee.new('Sally', 20)
-      sally.add_interest('Scrambler')
+      sally.add_interest('Bumper Cars')
       johnny = Attendee.new("Johnny", 5)
       johnny.add_interest('Bumper Cars')
       jeffco_fair.admit(bob)
@@ -83,6 +83,26 @@ RSpec.describe Carnival do
 
       expected = [bob, sally, johnny]
       expect(jeffco_fair.attendees).to eq(expected)
+    end
+
+    it 'returns has of rides with attendees based on interest' do
+      bob = Attendee.new('Bob', 20)
+      bob.add_interest('Ferris Wheel')
+      bob.add_interest('Bumper Cars')
+      sally = Attendee.new('Sally', 20)
+      sally.add_interest('Bumper Cars')
+      johnny = Attendee.new("Johnny", 5)
+      johnny.add_interest('Bumper Cars')
+      jeffco_fair.admit(bob)
+      jeffco_fair.admit(sally)
+      jeffco_fair.admit(johnny)
+
+      expected = {
+        ferris_wheel => [bob],
+        bumper_cars => [bob, sally, johnny],
+        scrambler => []
+      }
+      expect(jeffco_fair.attendees_by_ride_interest).to eq(expected)
     end
   end
 end
