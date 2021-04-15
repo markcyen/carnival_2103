@@ -24,4 +24,22 @@ class Carnival
   def admit(attendee)
     @attendees << attendee
   end
+
+  def attendees_by_ride_interest
+    by_ride_interest = {}
+    @rides.each do |ride|
+      @attendees.each do |attendee|
+        if by_ride_interest[ride].nil?
+          if attendee.interests.include?(ride.name)
+            by_ride_interest[ride] = [attendee]
+          elsif !by_ride_interest[ride].include?(attendee)
+            by_ride_interest[ride] << attendee
+          end
+        else
+          by_ride_interest[ride] = []
+        end
+      end
+    end
+    by_ride_interest
+  end
 end
